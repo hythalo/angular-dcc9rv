@@ -1,3 +1,4 @@
+import { AppConfigService } from './../app-config.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,6 +7,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./top-bar.component.css']
 })
 export class TopBarComponent {
+
+  private title = "My store ";
+  
+  constructor(private app: AppConfigService) {
+    this.title += this.app.getConfig().environment;
+  }
+
+  getTitle() {
+    return this.title;
+  }
 
 }
 

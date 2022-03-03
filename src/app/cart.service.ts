@@ -1,3 +1,4 @@
+import { AppConfigService } from './app-config.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from './products';
@@ -8,10 +9,15 @@ import { Product } from './products';
 export class CartService {
   
   items: Product[] = [];
+  // url = "/assets/shipping.json";
+  url = this.appConfig.getConfig().shippingUrl;
   
   constructor(
-    private http: HttpClient
-  ) { }
+    private http: HttpClient,
+    private appConfig: AppConfigService
+  ) {
+    console.log(this.url);
+  }
 
   addToCart(product: Product) {
     this.items.push(product);
@@ -27,6 +33,6 @@ export class CartService {
   }
 
   getShippingPrices() {
-    return this.http.get<{type: string, price: number}[]>('/assets/shipping.json')
+    return this.http.get<{type: string, price: number}[]>(this.url)
   }
 }
